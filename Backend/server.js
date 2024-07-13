@@ -46,9 +46,9 @@ app.put('/api/products/:id', async (req, res) => {
 
 app.delete('/api/products/:id', async (req, res) => {
     await Product.findByIdAndDelete(req.params.id);
-    res.send({ message: 'Product deleted' });
+    res.send({ message: 'produit supprimé' });
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(` port ${port}`);
 });
