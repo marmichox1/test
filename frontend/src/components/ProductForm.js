@@ -6,9 +6,11 @@ import { addProduct, updateProduct } from '../slices/productsSlice';
 const ProductForm = ({ open, handleClose, selectedProduct }) => {
     const [product, setProduct] = useState({
         name: '',
-        description: '',
+        type: '',
         price: '',
-        category: ''
+        rating: '',
+        warranty_years: '',
+        available: false
     });
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const ProductForm = ({ open, handleClose, selectedProduct }) => {
         if (selectedProduct) {
             setProduct(selectedProduct);
         } else {
-            setProduct({ name: '', description: '', price: '', category: '' });
+            setProduct({ name: '', type: '', price: '', rating: '', warranty_years: '', available: false });
         }
     }, [selectedProduct]);
 
@@ -26,15 +28,27 @@ const ProductForm = ({ open, handleClose, selectedProduct }) => {
         setProduct({ ...product, [name]: value });
     };
 
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setProduct({ ...product, [name]: checked });
+    };
+
     const validate = () => {
         let tempErrors = {};
         tempErrors.name = product.name ? "" : "Le nom est requis";
-        tempErrors.description = product.description ? "" : "La description est requise";
+        tempErrors.type = product.type ? "" : "Le type est requis";
         tempErrors.price = product.price ? "" : "Le prix est requis";
         if (product.price && isNaN(product.price)) {
             tempErrors.price = "Le prix doit être un nombre";
         }
-        tempErrors.category = product.category ? "" : "La catégorie est requise";
+        tempErrors.rating = product.rating ? "" : "La note est requise";
+        if (product.rating && isNaN(product.rating)) {
+            tempErrors.rating = "La note doit être un nombre";
+        }
+        tempErrors.warranty_years = product.warranty_years ? "" : "La garantie est requise";
+        if (product.warranty_years && isNaN(product.warranty_years)) {
+            tempErrors.warranty_years = "La garantie doit être un nombre";
+        }
         setErrors(tempErrors);
         return Object.values(tempErrors).every(x => x === "");
     };
@@ -67,15 +81,15 @@ const ProductForm = ({ open, handleClose, selectedProduct }) => {
                     helperText={errors.name}
                 />
                 <TextField
-                    label="Description"
-                    name="description"
-                    value={product.description}
+                    label="Type"
+                    name="type"
+                    value={product.type}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     required
-                    error={!!errors.description}
-                    helperText={errors.description}
+                    error={!!errors.type}
+                    helperText={errors.type}
                 />
                 <TextField
                     label="Prix"
@@ -89,15 +103,35 @@ const ProductForm = ({ open, handleClose, selectedProduct }) => {
                     helperText={errors.price}
                 />
                 <TextField
-                    label="Catégorie"
-                    name="category"
-                    value={product.category}
+                    label="Note"
+                    name="rating"
+                    value={product.rating}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"
                     required
-                    error={!!errors.category}
-                    helperText={errors.category}
+                    error={!!errors.rating}
+                    helperText={errors.rating}
+                />
+                <TextField
+                    label="Garantie (années)"
+                    name="warranty_years"
+                    value={product.warranty_years}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                    required
+                    error={!!errors.warranty_years}
+                    helperText={errors.warranty_years}
+                />
+                <TextField
+                    label="Disponible"
+                    name="available"
+                    type="checkbox"
+                    checked={product.available}
+                    onChange={handleCheckboxChange}
+                    fullWidth
+                    margin="normal"
                 />
             </DialogContent>
             <DialogActions>

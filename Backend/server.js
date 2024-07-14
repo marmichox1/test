@@ -16,9 +16,11 @@ mongoose.connect('mongodb://localhost:27017/products', {
 
 const productSchema = new mongoose.Schema({
     name: String,
-    description: String,
+    type: String,
     price: Number,
-    category: String
+    rating: Number,
+    warranty_years: Number,
+    available: Boolean
 });
 
 const Product = mongoose.model('Product', productSchema);
@@ -50,5 +52,5 @@ app.delete('/api/products/:id', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(` port ${port}`);
+    console.log(`Server running on port ${port}`);
 });

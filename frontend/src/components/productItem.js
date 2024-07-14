@@ -6,7 +6,10 @@ const ProductItem = ({ product, onEdit, onDelete }) => {
     return (
         <>
             <ListItem>
-                <ListItemText primary={product.name} secondary={`Catégorie: ${product.category} | Prix: $${product.price}`} />
+                <ListItemText
+                    primary={product.name}
+                    secondary={`Type: ${product.type} | Prix: $${product.price} | Note: ${product.rating} | Garantie: ${product.warranty_years} ans | Disponible: ${product.available ? 'Oui' : 'Non'}`}
+                />
                 <ListItemSecondaryAction>
                     <IconButton edge="end" onClick={() => onEdit(product)}>
                         <Edit color="primary" />
