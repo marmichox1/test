@@ -9,3 +9,4 @@ et pour "state management" on à utilisé Redux qui est une librairie js( state 
 Pour lancer le projet  :
     1- "node server.js" pour lancer le backend
     2- " npm start" pour lancer le frontend
+    3-creation de la DB avec le nom (products)
